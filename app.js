@@ -5,6 +5,7 @@ if (!process.env.PORT)
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('chinook.sl3');
 
+
 /* calls callback with specified page's artists and artist's details */
 var artists = function(page, artist, details, callback) {
   db.all("SELECT Artist.ArtistId, Name, StarsNo " +
@@ -115,9 +116,11 @@ app.get('/artists', function(request, response) {
 });
 
 /* responds with specified page's artists */
+//app.get -> sprejme dva parametra
+//funkcija artist
 app.get('/artists/:page', function(request, response) {
   artists(request.params.page, -1, '', function(result) {
-    response.render('index', {content: result});
+    response.render('index', {content: result}); //tako odjemalcu vrnemo stran, namesto content,vrnemo result
   });
 });
 
@@ -190,5 +193,11 @@ app.get('/pages', function(request, response) {
       response.send({pages: Math.ceil(row.Artists / 33)});
   });
 });
-
-
+// 1. zagon streznika:
+app.listen(process.env.PORT, function() {
+  console.log('Strežnik je pognan!');
+});
+//1. posredovanje vsebin,privzeta strab je artists/1
+app.get('/', function(request, response) {
+  response.redirect('/artists/1');
+});
