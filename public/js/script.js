@@ -31,5 +31,14 @@ $(document).ready(function() {
     });
   });
   
+  /* Prikaz podrobnosti seznama predvajanj */
+  $('#playlists div span').click(function(){
+    var details = $(this);
+    $.get('/playlist/' + details.parent().attr('playlist'),function(data){
+        details.html(' (' + data.tracks + ' track' + (data.tracks != 1? 's': '') + ' | ' +
+        Math.round(data.time / 60000) + ' min | <strong>$' + Math.round(data.price) + '</strong> total)');
+    });
+  });
+  
   
 });
