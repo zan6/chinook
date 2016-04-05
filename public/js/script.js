@@ -32,6 +32,7 @@ $(document).ready(function() {
   });
   
   /* Prikaz podrobnosti seznama predvajanj */
+  
   $('#playlists div span').click(function(){
     var details = $(this);
     $.get('/playlist/' + details.parent().attr('playlist'),function(data){
